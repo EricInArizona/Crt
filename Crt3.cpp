@@ -1,7 +1,6 @@
-// Copyright Eric Chauvin 2021 - 2022.
+// Copyright Eric Chauvin 2021 - 2023.
 
 
-/*
 
 
 // The first few numbers for the base:
@@ -26,48 +25,20 @@
 
 
 
-
-Crt3::Crt3( void )
-{
-digitMAr = new Int32[last];
-setToZero();
-}
-
-
-Crt3::Crt3( const Crt3& in )
-{
-digitMAr = new Int32[last];
-
-// setToZero();
-
-// Make the compiler think in is being used.
-if( in.testForCopy == 7 )
-  return;
-
-throw "Don't use copy constructor for Crt3.\n";
-}
-
-
-Crt3::~Crt3( void )
-{
-delete[] digitMAr;
-}
-
-
-
 void Crt3::copy( const Crt3& toCopy )
 {
 index = toCopy.index;
 const Int32 endAt = index;
 for( Int32 count = 0; count <= endAt; count++ )
   {
-  digitMAr[count] = toCopy.digitMAr[count];
+  digitMAr.setVal( count,
+            toCopy.digitMAr.getVal( count ));
   }
 }
 
 
 
-/////////
+/*
 void Crt3::copyToCrtBuf( CrtBuf& copyTo )
 {
 for( Int32 count = 0; count < last; count++ )
@@ -75,7 +46,7 @@ for( Int32 count = 0; count < last; count++ )
   copyTo.setD( crt.getD( count ), count );
   }
 }
-//////
+*/
 
 
 
@@ -87,7 +58,8 @@ if( index != toCheck.index )
 const Int32 endAt = index;
 for( Int32 count = 0; count <= endAt; count++ )
   {
-  if( digitMAr[count] != toCheck.digitMAr[count] )
+  if( digitMAr.getVal( count ) !=
+            toCheck.digitMAr.getVal( count ) )
     return false;
 
   }
@@ -97,7 +69,7 @@ return true;
 
 
 
-/////////
+/*
 bool Crt3::incAt( const SPrimes& sPrimes,
                   const Int32 where )
 {
@@ -119,11 +91,11 @@ for( Int32 count = where; count < last; count++ )
 // It would never get this far.
 return false;
 }
-/////
+*/
 
 
 
-
+/*
 void Crt3::toInteger( const CrtMath& crtMath,
                       Integer& toSet,
                       IntegerMath& intMath ) const
@@ -141,7 +113,7 @@ for( Int32 count = 1; count <= endAt; count++ )
     continue;
 
   RangeC::test2( digit, 0, 0xFFFFFF,
-            "Crt2.toInteger digit range." );
+            "Crt3.toInteger digit range." );
 
   crtMath.copyFromIntBuf( bigBase, count );
 
@@ -154,6 +126,8 @@ for( Int32 count = 1; count <= endAt; count++ )
   }
 }
 
+*/
+
 
 
 
@@ -163,6 +137,7 @@ for( Int32 count = 1; count <= endAt; count++ )
 // straight-forward version.
 
 
+/*
 void Crt3::setFromCrtV6( const Int32 maxIndex,
                          const CrtMath& crtMath,
                          const SPrimes& sPrimes,
@@ -187,10 +162,11 @@ for( Int32 count = 1; count <= maxIndex; count++ )
     }
   }
 }
+*/
 
 
 
-
+/*
 void Crt3::setCrt( const CrtMath& crtMath,
                    const SPrimes& sPrimes )
 {
@@ -210,11 +186,11 @@ for( Int32 count = 1; count < last; count++ )
   crt.setD( accumD, count );
   }
 }
+*/
 
 
 
-
-////
+/*
 bool Crt3::setInvCrt( Crt3& prime2Crt3,
                       const Int32 maxLen,
                       const Crt& prod,
@@ -267,11 +243,11 @@ for( Int32 count = 1; count < last; count++ )
 
 return true;
 }
-///////
+*/
 
 
 
-////
+/*
 bool Crt3::setInvDigit( const Int32 where,
                         const Int32 prime,
                         const Int32 fromDigit,
@@ -314,10 +290,11 @@ if( index > maxLen )
 
 return true;
 }
-//////
+*/
 
 
 
+/*
 Str Crt3::toStr( const CrtMath& crtMath,
                  IntegerMath& intMath )
 {
@@ -326,11 +303,11 @@ toInteger( crtMath, showIt, intMath );
 Str showS =  intMath.toString10( showIt );
 return showS;
 }
+*/
 
 
 
-
-
+/*
 void Crt3::setFromInteger( const Integer& setFrom,
                            IntegerMath& intMath,
                            const SPrimes& sPrimes,
@@ -341,11 +318,11 @@ crt.setFromInteger( setFrom, intMath, sPrimes );
 
 setFromCrtV6( last - 1, crtMath, sPrimes, multInv );
 }
+*/
 
 
 
-
-////
+/*
 void Crt::setFromInt( const Int32 setFrom,
                       const SPrimes& sPrimes )
 {
@@ -356,11 +333,7 @@ for( Int32 count = 0; count < last; count++ )
   }
 }
 
-/////
 
-
-
-/////
 void Crt3::setFromCrtTree( const CrtTreeL& crtTree,
                            const CrtMath& crtMath,
                            const SPrimes& sPrimes,
@@ -376,10 +349,10 @@ for( Int32 count = 0; count <= max; count++ )
 
 setFromCrtV6( max, crtMath, sPrimes, multInv );
 }
-/////
+*/
 
 
-
+/*
 bool Crt3::isFullGoodX( const GoodX& goodX,
                         const CrtMath& crtMath,
                         const SPrimes& sPrimes ) const
@@ -401,5 +374,4 @@ for( Int32 where = startAt; where < last; where++ )
 
 return true;
 }
-
 */

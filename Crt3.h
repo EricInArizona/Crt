@@ -1,7 +1,7 @@
-// Copyright Eric Chauvin, 2021 - 2022.
+// Copyright Eric Chauvin, 2021 - 2023.
 
 
-/*
+
 // This is licensed under the GNU General
 // Public License (GPL).  It is the
 // same license that Linux has.
@@ -15,14 +15,14 @@
 #include "../CppBase/BasicTypes.h"
 #include "../CppBase/RangeC.h"
 
-#include "../CryptoBase/ProjConst.h"
 #include "../CryptoBase/SPrimes.h"
 #include "Crt.h"
 #include "CrtMath.h"
-#include "../CryptoBase/MultInv.h"
-#include "../CryptoBase/QuadRes.h"
+
+// #include "../CryptoBase/MultInv.h"
+// #include "../CryptoBase/QuadRes.h"
 // #include "CrtTreeL.h"
-#include "../CryptoBase/GoodX.h"
+// #include "../CryptoBase/GoodX.h"
 
 
 
@@ -30,16 +30,16 @@
 class Crt3
   {
   private:
-  Int32 testForCopy = 123;
+  bool testForCopy = false;
 
   // If last is too small then toInteger()
   // will come out too small.
-  static const Int32 last =
-                   ProjConst::crtDigitArraySize;
+  static const Int32 last = Crt::last;
 
-  Int32* digitMAr;
+  Int32Array digitMAr;
   Int32 index = 0;
 
+/*
   inline static Int32 getTestAccum( const Int32 prime,
                          const Int32 accum,
                          const Int32 crtDigit,
@@ -51,26 +51,46 @@ class Crt3
     test = test % prime;
     return test;
     }
+*/
+
 
   public:
   Crt crt;
 
-  Crt3( void );
-  Crt3( const Crt3& in );
-  ~Crt3( void );
+  Crt3( void )
+    {
+    digitMAr.setSize( last );
+    setToZero();
+    }
+
+
+  Crt3( const Crt3& in )
+    {
+    if( in.testForCopy )
+      return;
+
+    throw "Copy constructor for Crt3.";
+    }
+
+  ~Crt3( void )
+    {
+    }
+
 
   inline void setToZero()
     {
     index = 0;
-    digitMAr[0] = 0;
+    digitMAr.setVal( 0, 0 );
     }
 
   inline void setToOne()
     {
     index = 0;
-    digitMAr[0] = 1;
+    digitMAr.setVal( 0, 1 );
     }
 
+
+/*
   inline Int32 getAccumByte( const Int32 row,
                              const CrtMath& crtMath ) const
 
@@ -88,6 +108,7 @@ class Crt3
 
     return result;
     }
+*/
 
 
   inline bool isZero() const
@@ -95,7 +116,7 @@ class Crt3
     if( index != 0 )
       return false;
 
-    if( digitMAr[0] != 0 )
+    if( digitMAr.getVal( 0 ) != 0 )
       return false;
 
     return true;
@@ -106,7 +127,7 @@ class Crt3
     if( index != 0 )
       return false;
 
-    if( digitMAr[0] != 1 )
+    if( digitMAr.getVal( 0 ) != 1 )
       return false;
 
     return true;
@@ -122,19 +143,12 @@ class Crt3
   // M for Magnitude digit.
   inline Int32 getMD( Int32 where ) const
     {
-    RangeC::test2( where, 0, last - 1,
-                   "Crt3.getMD where range." );
-
-    return digitMAr[where];
+    return digitMAr.getVal( where );
     }
-
 
   inline void setMD( Int32 setTo, Int32 where )
     {
-    RangeC::test2( where, 0, last - 1,
-                  "Crt2.setMD where range." );
-
-    digitMAr[where] = setTo;
+    digitMAr.setVal( where, setTo );
     }
 
 
@@ -143,27 +157,27 @@ class Crt3
     return index;
     }
 
-  inline void setIndex( Int32 setTo )
+  inline void setIndex( const Int32 setTo )
     {
     RangeC::test2( setTo, 0, last - 1,
-                "Crt2.setIndex setTo range." );
+             "Crt3.setIndex index range." );
 
     index = setTo;
     }
 
-  void toInteger( const CrtMath& crtMath,
-                  Integer& toSet,
-                  IntegerMath& intMath ) const;
+  // void toInteger( const CrtMath& crtMath,
+  //                Integer& toSet,
+  //                IntegerMath& intMath ) const;
 
-  void setCrt( const CrtMath& crtMath,
-               const SPrimes& sPrimes );
+  // void setCrt( const CrtMath& crtMath,
+  //             const SPrimes& sPrimes );
 
-
-  inline void setFromCrtAt( const Int32 where,
-                            const Int32 accum,
-                            const CrtMath& crtMath,
-                            const Int32 prime,
-                            const MultInv& multInv )
+/*
+inline void setFromCrtAt( const Int32 where,
+                     const Int32 accum,
+                     const CrtMath& crtMath,
+                     const Int32 prime,
+                     const MultInv& multInv )
     {
     // RangeC::test2( where, 1, last - 1,
        //           "Crt3::setFromCrtAt where range." );
@@ -191,12 +205,17 @@ class Crt3
     testInv = testInv % prime;
     digitMAr[where] = testInv;
     }
+*/
 
 
+/*
   void setFromCrtV6( const Int32 maxIndex,
                      const CrtMath& crtMath,
                      const SPrimes& sPrimes,
                      const MultInv& multInv );
+*/
+
+
 
 
 /*
@@ -213,6 +232,7 @@ class Crt3
     //           const Int32 where );
 
 
+/*
   inline Int32 getAccum( const Int32 row,
                    const Int32 col,
                    const Int32 prime,
@@ -238,6 +258,8 @@ class Crt3
 
     return result;
     }
+*/
+
 
 /*
   bool setInvDigit( const Int32 where,
@@ -249,6 +271,8 @@ class Crt3
 */
 
 
+
+/*
   Str toStr( const CrtMath& crtMath,
              IntegerMath& intMath );
 
@@ -258,6 +282,7 @@ class Crt3
                        const SPrimes& sPrimes,
                        const MultInv& multInv,
                        const CrtMath& crtMath );
+*/
 
 /*
   void setFromCrtTree( const CrtTreeL& crtTree,
@@ -266,10 +291,11 @@ class Crt3
                        const MultInv& multInv );
 */
 
+
+/*
   bool isFullGoodX( const GoodX& goodX,
                     const CrtMath& crtMath,
                     const SPrimes& sPrimes ) const;
+*/
 
   };
-
-*/

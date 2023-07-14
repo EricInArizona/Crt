@@ -1,37 +1,10 @@
-// Copyright Eric Chauvin 2021 - 2022.
+/*
+
+// Copyright Eric Chauvin 2021 - 2023.
 
 
 
 #include "CrtMath.h"
-
-
-
-CrtMath::CrtMath( void )
-{
-baseAr = new IntBuf[last];
-baseArCrt = new CrtBuf[last];
-}
-
-
-
-CrtMath::CrtMath( const CrtMath& in )
-{
-baseAr = new IntBuf[last];
-baseArCrt = new CrtBuf[last];
-
-// Make the compiler think in is being used.
-if( in.testForCopy == 7 )
-  return;
-
-throw "Don't use copy constructor for CrtMath.\n";
-}
-
-
-CrtMath::~CrtMath( void )
-{
-delete[] baseAr;
-delete[] baseArCrt;
-}
 
 
 
@@ -49,6 +22,7 @@ void CrtMath::setupBaseArray( IntegerMath& intMath,
 Integer bigBase;
 
 bigBase.setToOne();
+
 bigBase.copyToIntBuf( baseAr[0] );
 baseArCrt[0].setToOne();
 
@@ -81,3 +55,5 @@ void CrtMath::copyFromIntBuf( Integer& copyTo,
 {
 copyTo.copyFromIntBuf( baseAr[where] );
 }
+
+*/

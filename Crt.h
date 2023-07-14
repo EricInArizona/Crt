@@ -1,4 +1,11 @@
-// Copyright Eric Chauvin, 2021 - 2022.
+// Copyright Eric Chauvin, 2021 - 2023.
+
+
+
+// This is licensed under the GNU General
+// Public License (GPL).  It is the
+// same license that Linux has.
+// https://www.gnu.org/licenses/gpl-3.0.html
 
 
 
@@ -8,25 +15,43 @@
 
 #include "..\CppBase\BasicTypes.h"
 #include "..\CppBase\RangeC.h"
-#include "..\CryptoBase\ProjConst.h"
 #include "..\CryptoBase\SPrimes.h"
 #include "..\CppInt\Integer.h"
 #include "..\CppInt\IntegerMath.h"
+
+#include "..\CppMem\Int32Array.h"
 
 
 class Crt
   {
   private:
-  Int32 testForCopy = 123;
-  static const Int32 last =
-                   ProjConst::crtDigitArraySize;
+  bool testForCopy = false;
 
-  Int32* digitAr;
+  Int32Array digitAr;
 
   public:
-  Crt( void );
-  Crt( const Crt& in );
-  ~Crt( void );
+  static const Int32 last = 128;
+
+  Crt( void )
+    {
+    digitAr.setSize( last );
+    setToZero();
+    }
+
+
+  Crt( const Crt& in )
+    {
+    if( in.testForCopy )
+      return;
+
+    throw "Copy constructor for Crt.";
+    }
+
+
+  ~Crt( void )
+    {
+    }
+
   void setToZero();
   void setToOne();
   bool isZero() const;
@@ -51,22 +76,16 @@ class Crt
 
   inline Int32 getD( const Int32 index ) const
     {
-    RangeC::test2( index, 0, last - 1,
-            "Crt.getD() index range." );
-
-    return digitAr[index];
+    return digitAr.getVal( index );
     }
 
   inline void setD( const Int32 setTo,
                     const Int32 index )
     {
-    RangeC::test2( index, 0, last - 1,
-            "Crt.setD() index range." );
-
     RangeC::test2( setTo, 0, 0xFFFFFF,
             "Crt.setD() setTo range." );
 
-    digitAr[index] = setTo;
+    digitAr.setVal( index, setTo );
     }
 
   };

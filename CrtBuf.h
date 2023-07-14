@@ -1,4 +1,7 @@
-// Copyright Eric Chauvin, 2021 - 2022.
+/*
+
+
+// Copyright Eric Chauvin, 2021 - 2023.
 
 
 
@@ -9,32 +12,44 @@
 
 
 
-
 #pragma once
 
 
 
 #include "../CppBase/BasicTypes.h"
 #include "../CppBase/RangeC.h"
-#include "../CryptoBase/ProjConst.h"
 #include "../CryptoBase/SPrimes.h"
 #include "../CppInt/Integer.h"
 #include "../CppInt/IntegerMath.h"
-
+#include "Crt.h"
 
 class CrtBuf
   {
   private:
-  Int32 testForCopy = 123;
-  static const Int32 last =
-                   ProjConst::crtDigitArraySize;
+  bool testForCopy = false;
+  static const Int32 last = Crt::last;
 
-  Int32* digitAr;
+  Int32Array digitAr;
 
   public:
-  CrtBuf( void );
-  CrtBuf( const CrtBuf& in );
-  ~CrtBuf( void );
+  CrtBuf( void )
+    {
+    setToZero();
+    }
+
+  CrtBuf( const CrtBuf& in )
+    {
+    if( in.testForCopy )
+      return;
+
+    throw "Copy constructor for CrtBuf.";
+    }
+
+
+  ~CrtBuf( void )
+    {
+    }
+
   void setToZero();
   void setToOne();
 
@@ -45,22 +60,19 @@ class CrtBuf
 
   inline Int32 getD( const Int32 index ) const
     {
-    RangeC::test2( index, 0, last - 1,
-            "CrtBuf.getD() index range." );
-
-    return digitAr[index];
+    return digitAr.getVal( index );
     }
 
   inline void setD( const Int32 setTo,
                     const Int32 index )
     {
-    RangeC::test2( index, 0, last - 1,
-            "CrtBuf.setD() index range." );
-
     RangeC::test2( setTo, 0, 0xFFFFFF,
             "Crt.setD() setTo range." );
 
-    digitAr[index] = setTo;
+    digitAr.setVal( index, setTo );
     }
 
   };
+
+*/
+

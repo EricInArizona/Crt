@@ -1,7 +1,10 @@
+/*
+Crt3 has made this obsolete.
+But this is still a reference and example.
+
+
 // Copyright Eric Chauvin 2021 - 2022.
 
-
-/*
 
 
 // The first few numbers for the base:
@@ -661,5 +664,3 @@ return showS;
 }
 
 */
-
-

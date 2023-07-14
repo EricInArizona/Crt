@@ -1,4 +1,6 @@
-// Copyright Eric Chauvin, 2021 - 2022.
+/*
+
+// Copyright Eric Chauvin, 2021 - 2023.
 
 
 
@@ -18,32 +20,48 @@
 #include "../CppInt/IntegerMath.h"
 #include "../CppInt/IntBuf.h"
 #include "../CryptoBase/SPrimes.h"
-#include "CrtBuf.h"
+// #include "CrtBuf.h"
 
 
 
 class CrtMath
   {
   private:
-  Int32 testForCopy = 123;
-  IntBuf* baseAr;
-  CrtBuf* baseArCrt;
+  bool testForCopy = false;
+  // IntBuf* baseAr;
+  // CrtBuf* baseArCrt;
 
-  static const Int32 last =
-                   ProjConst::crtDigitArraySize;
+  static const Int32 last = Crt::last;
 
   void setupBaseArray( IntegerMath& intMath,
                        const SPrimes& sPrimes );
 
   public:
-  CrtMath( void );
-  CrtMath( const CrtMath& in );
-  ~CrtMath( void );
+  CrtMath( void )
+    {
+    // baseAr = new IntBuf[last];
+    // baseArCrt = new CrtBuf[last];
+    }
+
+  CrtMath( const CrtMath& in )
+    {
+    if( in.testForCopy )
+      return;
+
+    throw "Copy constructor for CrtMath.";
+    }
+
+  ~CrtMath( void )
+    {
+    }
+
+
   void init( IntegerMath& intMath,
              const SPrimes& sPrimes );
 
+
   void copyFromIntBuf( Integer& copyTo,
-                       const Int32 where ) const;
+                const Int32 where ) const;
 
   inline Int32 getCrtDigit( const Int32 row,
                             const Int32 col ) const
@@ -67,3 +85,6 @@ class CrtMath
     }
 
   };
+
+*/
+
